@@ -1,7 +1,7 @@
 
 const api = {
     key: "6a41cf11109a848f1463b2e373b4ff69",
-    baseUrl: "http://api.openweathermap.org/data/2.5/"
+    baseUrl: "https://api.openweathermap.org/data/2.5/"
 }
 
 const welcome = document.querySelector('.welcome');
@@ -119,7 +119,7 @@ function displayforecast(forecast) {
     temp.innerHTML = `${Math.round(forecast.current.temp)}<span>&deg;c</span>`;
 
     let icon = document.querySelector('#icon');
-    icon.src = `http://openweathermap.org/img/wn/${forecast.current.weather[0].icon}@2x.png`; //remove @2x to get a smaller img
+    icon.src = `https://openweathermap.org/img/wn/${forecast.current.weather[0].icon}@2x.png`; //remove @2x to get a smaller img
 
     let weather_el = document.querySelector('.current .weather');
     weather_el.innerHTML = forecast.current.weather[0].main; //weather[0] as weather in the json is an array.
@@ -144,7 +144,7 @@ function displayforecast(forecast) {
     let daily_icon = document.querySelectorAll('.small-icon');
     daily_icon.forEach(function (icon, index) {
         console.log(icon);
-        icon.src = `http://openweathermap.org/img/wn/${forecast.daily[index].weather[0].icon}.png`; //remove @2x to get a smaller img
+        icon.src = `https://openweathermap.org/img/wn/${forecast.daily[index].weather[0].icon}.png`; //remove @2x to get a smaller img
     });
 
     const daily_weather = document.querySelectorAll('.forecast .weather');
