@@ -1,3 +1,4 @@
+'use strict';
 
 const api = {
     key: "6a41cf11109a848f1463b2e373b4ff69",
@@ -66,7 +67,7 @@ function getResults(query) {
 
     //Use user query to fetch data that will produce the longitude & latitude for forecast fetch
     let userQuery = fetch(`${api.baseUrl}weather?q=${query}&units=metric&APPID=${api.key}`);
-
+    
     userQuery.then(response => {
         return response.json();
     },
@@ -87,19 +88,7 @@ function getResults(query) {
         }
     })
     .then(displayResults);
-
-    /*-------------------------------------------
-    Trying to implement service worker cache here
-    --------------------------------------------*/
-    getResultsFromCache(query)
-    /*.then(response => {
-        return response.json();
-    })*/
-    //.then(displayResults);
-    console.log(getResultsFromCache(query));
-    /*------------------end---------------------*/
 }
-
 
 function displayResults(response) {
 
@@ -114,49 +103,17 @@ function displayResults(response) {
     console.log(`lat: ${response.coord.lat}, lon: ${response.coord.lon}`);
         
     let automatedQuery = fetch(`${api.baseUrl}onecall?lat=${response.coord.lat}&lon=${response.coord.lon}&exclude=hourly&units=metric&appid=${api.key}`);
-    
-    /*-------------------------------------------
-    Trying to implement service worker cache here
-   --------------------------------------------*/
-    /*getForecastFromCache(response); 
-        /*.then(forecast => {
-            return forecast.json();
-        })*\/
-        //.then(displayforecast);
-    console.log(getForecastFromCache(response));*/
-    /*------------------end---------------------*/
-    
+
     automatedQuery.then(forecast => {
         return forecast.json();
 
     }).then(displayforecast);
     Object.assign(loader.style, show_small);
     Object.assign(main.style, show_unset);
-
-
-   /*  //find out when response was last updated
-
-
-    const cardLastUpdatedElem = document.querySelector('.card-last-updated');
-    const cardLastUpdated = cardLastUpdatedElem.textContent;
-    
-    //const cardLastUpdated = cardLastUpdatedElem.textContent;
-    console.log(cardLastUpdated);
-    const lastUpdated = parseInt(cardLastUpdated);
-    console.log(lastUpdated);
-    console.log(response.dt);
-
-    // If the data on the element is newer, skip the update.
-    if (lastUpdated >= response.dt) {
-      return;
-    }
-
-    cardLastUpdatedElem.textContent = response.dt;
-    console.log(cardLastUpdatedElem.textContent);*/
 }
 
 function displayforecast(forecast) {
-   
+ 
     let unix_time = forecast.current.dt * 1000;
     let now = new Date(unix_time);
     console.log(now.toDateString());
@@ -207,47 +164,3 @@ function displayforecast(forecast) {
     Object.assign(main.style, show);
 }
 
-
- //----------- Service Worker Cache ------------------------------
-
- //for query
- function getResultsFromCache(query) {
-    if (!('caches' in window)) {
-        return null;
-    }
-
-    const url = `${window.location.origin}/${api.baseUrl}weather?q=${query}&units=metric&APPID=${api.key}`;
-    return caches.match(url)
-        .then((response) => {
-            if (response) {
-                return response.json();
-            }
-            return null;
-        })
-        .catch((err) => {
-            console.error('Error getting data from cache', err);
-            return null;
-        });
-}
-
-//for forecast
-/*
-function getForecastFromCache(response) {
-    if (!('caches' in window)) {
-        return null;
-    }
-
-    const url = `${window.location.origin}/${api.baseUrl}onecall?lat=${response.coord.lat}&lon=${response.coord.lon}&exclude=hourly&units=metric&appid=${api.key}`;
-    return caches.match(url)
-        .then((forcast) => {
-            if (forcast) {
-                return forecast.json();
-            }
-            return null;
-        })
-        .catch((err) => {
-            console.error('Error getting data from cache', err);
-            return null;
-        });
-}
-*/

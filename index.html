@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Weather App - Smash It</title>
+        <title>Home | Weather App - Smash It</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-compatible" content="ie=edge">
         
         <!--link to css file-->
         <link rel="stylesheet" href="./css/index.css">
-      
+        <meta name="description" content="Smash-It Weather app is a progressive web app. Uses fetch API to fetch data from open weather map API. Google Africa Developer Scholarship 2020 practice project.">
+       
+        <!-- CODELAB: Add iOS meta tags and icons -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="#008080">
+        <meta name="apple-mobile-web-app-title" content="Weather PWA">
         <!--generated from https://realfavicongenerator.net/-->
         <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
@@ -18,6 +23,19 @@
         <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#048988">
         <meta name="msapplication-TileColor" content="#00aba9">
         <meta name="msapplication-config" content="browserconfig.xml" />
+        <meta name="theme-color" content="#008080">
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => {
+                        console.log('ServiceWorker registered: ', reg);
+                    }).catch(err => {
+                        console.error('Registration failed: ', err);
+                    });
+                });
+            }
+        </script>
     </head>
     <body>
         
@@ -26,7 +44,7 @@
                 <h1 class="header">Weather app</h1>
                 <input type="text" value="" autocomplete="off" class="search-box" placeholder="Search for a city...">
             </header>
-
+           
             <div class="weather-area">
                 <section class="welcome">
                     <!--Cloud svg-->
@@ -100,6 +118,7 @@
                     </svg>
                     <div class="message">Weather App for upcoming Smash It event</div>
                 </section>
+                <div class="card-last-updated"></div>
 
                 <section class="main">
                     <div class="location">
