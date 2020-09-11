@@ -1,5 +1,5 @@
 {
-    "name": "Smash-It Weather App",
+    "name": "Weather App",
     "short_name": "Weather App",
     "icons": [
         {
@@ -19,5 +19,5 @@
     "background_color": "#00aba9",
     "start_url": "/",
     "display": "standalone",
-    "orientation": "any"
+    "orientation": "portrait"
 }

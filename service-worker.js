@@ -1,3 +1,7 @@
+/*=================================================================
+    Licence obtained at https://www.apache.org/licenses/LICENSE-2.0 
+    in license file
+==================================================================*/
 
 'use strict';
 
@@ -6,12 +10,20 @@ const FILES_TO_CACHE = [
     './',
     './index.html',
     './js/index.js',
+    './js/install.js',
     './css/index.css',
-    'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'
+    './img/cloud.svg',
+    'https://fonts.googleapis.com/css2?family=Kite+One&family=Nunito&display=swap',
+    './favicon-16x16.png',
+    './favicon-32x32.png',
+    './favicon.ico',
+    './android-chrome-192x192.png',
+    './android-chrome-512x512.png',
+    './site.webmanifest'
 ]
 
-const CACHE_NAME = 'pages-cache-v1';
-const DATA_CACHE_NAME = 'data-cache-v1';
+const CACHE_NAME = 'pages-cache-v2';
+const DATA_CACHE_NAME = 'data-cache-v2';
 
 self.addEventListener('install', event => {
     console.log('Service worker installing...');
@@ -56,8 +68,8 @@ self.addEventListener('fetch', event => {
                 return fetch(event.request)
                     .then(response => {
                         // If the response was good, clone it and store it in the cache.
-                        if (response === 200) {
-                            cache.put(evt.request.url, response.clone());
+                        if (response.status === 200) {
+                            cache.put(event.request.url, response.clone());
                         }
                         return response;
                     }).catch((err) => {
